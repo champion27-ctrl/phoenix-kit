@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>The Phoenix Kit</title>
+   <!-- Load Tailwind CSS -->
+   <script src="https://cdn.tailwindcss.com"></script>
+   <style>
+       /* Simple loader style */
+       .loader {
+           border: 4px solid #f3f3f3; /* Light grey */
+           border-top: 4px solid #3498db; /* Blue */
+           border-radius: 50%;
+           width: 40px;
+           height: 40px;
+           animation: spin 1s linear infinite;
+       }
+       @keyframes spin {
+           0% { transform: rotate(0deg); }
+           100% { transform: rotate(360deg); }
+       }
+   </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+
+   <div class="flex flex-col md:flex-row">
+      
+       <!-- Left Panel: Phoenix Kit Generator -->
+       <div class="md:w-1/2 md:h-screen md:overflow-y-auto p-4 md:p-8">
+           <div class="max-w-3xl mx-auto">
+      
+               <!-- Header -->
+               <header class="text-center mb-8">
+                   <h1 class="text-4xl font-bold text-blue-700">The Phoenix Kit</h1>
+                   <p class="text-lg text-gray-600 mt-2">Resilient Lesson Planner</p>
+               </header>
+
+
+               <!-- Main Form -->
+               <main id="lesson-form" class="bg-white p-6 rounded-lg shadow-md">
+                   <div class="space-y-6">
+                      
+                       <!-- Context Grid -->
+                       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                           <div>
+                               <label for="age-range" class="block text-sm font-medium text-gray-700">Age Range</label>
+                               <input type="text" id="age-range" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="e.g., 7-11 years old">
+                           </div>
+                           <div>
+                               <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
+                               <input type="text" id="subject" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="e.g., Math, Literacy">
+                           </div>
+                           <div>
+                               <label for="time-available" class="block text-sm font-medium text-gray-700">Time Available</label>
+                               <input type="text" id="time-available" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="e.g., 20 minutes">
+                           </div>
+                           <div>
+                               <label for="materials" class="block text-sm font-medium text-gray-700">Available Materials</label>
+                               <input type="text" id="materials" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="e.g., Chalkboard, stones, paper">
+                           </div>
+                       </div>
+
+
+                       <!-- Main Goal -->
+                       <div>
+                           <label for="main-goal" class="block text-sm font-medium text-gray-700">Main Goal / Lesson Idea</label>
+                           <textarea id="main-goal" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="e.g., A simple lesson on multiplication as 'groups of'"></textarea>
+                       </div>
+
+
+                       <!-- Button -->
+                       <div>
+                           <button id="generate-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                               Generate Lesson Plan
+                           </button>
+                       </div>
+                   </div>
+               </main>
+
+
+               <!-- Loader -->
+               <div id="loader" class="hidden flex justify-center items-center my-8">
+                   <div class="loader"></div>
+                   <p class="ml-4 text-gray-600">Building your lesson...</p>
+               </div>
+
+
+               <!-- Result Display -->
+               <div id="results-container" class="hidden mt-8 bg-white p-6 rounded-lg shadow-md mb-8">
+                   <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">Your Lesson Plan</h2>
+                   <div id="results-content" class="prose max-w-none prose-h2:text-xl prose-h3:text-lg prose-ul:list-disc prose-ul:ml-6 space-y-4">
+                       <!-- Generated content will be injected here -->
+                   </div>
+                   <button id="copy-btn" class="mt-6 inline-flex items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                       Copy to Clipboard
+                   </button>
+               </div>
+           </div>
+       </div>
+
+
+       <!-- Right Panel: NotebookLM Viewer -->
+       <div class="md:w-1/2 md:h-screen p-4 md:p-8">
+           <div class="bg-white rounded-lg shadow-md w-full h-full flex flex-col">
+               <h2 class="text-2xl font-bold text-gray-800 p-6 border-b">
+                   Student Resource Hub
+               </h2>
+               <div class="flex-1 flex flex-col items-center justify-center p-8 text-center">
+                   <p class="text-lg text-gray-600 mb-6">
+                       This is a shared library of resources, guides, and materials for students.
+                   </p>
+                   <p class="text-gray-500 mb-8">
+                       Click the button below to open the secure NotebookLM in a new tab.
+                   </p>
+                   <a
+                       href="https://notebooklm.google.com/notebook/59fc027f-6ad1-49e2-b4b0-f31282a6615d"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="inline-block py-3 px-8 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                   >
+                       Open Student Hub
+                   </a>
+               </div>
+           </div>
+       </div>
+
+
+   </div>
+
+
+   <script>
+       // --- Core Application Logic ---
+
+
+       const generateBtn = document.getElementById('generate-btn');
+       const loader = document.getElementById('loader');
+       const resultsContainer = document.getElementById('results-container');
+       const resultsContent = document.getElementById('results-content');
+       const copyBtn = document.getElementById('copy-btn');
+       const form = document.getElementById('lesson-form');
+
+
+       // This is the "Trusted Library" - the content of Educator_Guide.md
+       // This simulates the NotebookLM grounding by providing the principles directly to the model.
+       const trustedGuide = `
+# The "Why" and "How": A Guide to Trauma-Informed Teaching
+
+
+## 1. What is Trauma-Informed Teaching?
+
+
+In our community, students (and teachers) have experienced very stressful and scary events. This is called trauma. Trauma is a normal human reaction to abnormal events.
+
+
+**Trauma-Informed Teaching is NOT about:**
+* You being a doctor or a therapist.
+* You "fixing" a student's trauma.
+* Having special, expensive materials.
+
+
+**Trauma-Informed Teaching IS about:**
+* **Understanding** that this stress affects how students learn, behave, and feel.
+* **Creating** a classroom that feels **safe, predictable, and supportive**.
+* **Focusing** on building relationships and resilience.
+
+
+When students feel safe, their brains can switch from "fight, flight, or freeze" mode to "learning and growing" mode.
+
+
+## 2. Why is this Important for Our Students?
+
+
+You might see students who:
+* Cannot concentrate or are easily distracted.
+* Are suddenly angry, disruptive, or "act out."
+* Are very quiet, withdrawn, or seem sad.
+* Have trouble remembering instructions.
+* Seem tired all the time.
+
+
+**These are not "bad" students.** These are normal reactions to high stress. By using this approach, we can help *every* student feel secure enough to learn, even if just for a little while each day.
+
+
+## 3. The 5 Core Principles (Simplified)
+
+
+Your goal is to build these 5 things into your classroom.
+1. **Safety:** The classroom is a predictable, calm place. Students know what to expect. The rules are simple and clear.
+2. **Trust:** You are a consistent, reliable adult. You do what you say you will do. You are fair.
+3. **Connection:** You show students you care. You learn their names. You smile. You build positive peer relationships.
+4. **Choice:** Trauma can make people feel powerless. You can give back a sense of control by offering small, simple choices.
+5. **Empowerment:** You focus on what students *can* do (their strengths). You help them feel successful.
+
+
+## 4. How to Use the Lesson Plan Template
+
+
+The attached template is designed to help you practice these 5 principles every single day.
+* **Subject & Main Goal:** Keep it to **one** simple thing. (e.g., "Learn to count to 10," "Write 3 new words").
+* **Materials:** Be realistic. (e.g., "Chalkboard," "My voice," "10 small stones").
+
+
+### **Part 1: The Arrival & Calming (5 Mins)**
+* **Principle:** **Safety & Trust**
+* **Why?** This is the most important part of the day. It helps students transition from the stressful outside world to a calm learning space. It must be **the same every time**.
+* **Examples:**
+ * **Welcome Ritual:** Greet each student by name as they enter.
+ * **Calm Breathing:** "Let's be still. Put your hands on your belly. Let's take 3 deep, slow breaths together. In... and out."
+ * **"Listen to the Sounds":** "Close your eyes for one minute. Listen to all the sounds you can hear far away. Now listen to the sounds in this room. Now open."
+
+
+### **Part 2: The Learning Activity (15-20 Mins)**
+* **Principle:** **Empowerment & Choice**
+* **Why?** This is where you focus on their strengths and give them a small bit of control.
+* **Student Choice (Simple):** This is key. The choice must be simple.
+ * "Would you like to write the answer on the board or say the answer out loud?"
+ * "Would you like to work with a partner or by yourself for this?"
+ * "Which problem should we do first, A or B?"
+* **Check for Understanding:** Ask them to *show* you, not just *tell* you.
+ * "Hold up the right number of fingers."
+ * "Give me a 'thumbs up' if you are ready to move on."
+
+
+### **Part 3: The Closing & Connection (5 Mins)**
+* **Principle:** **Connection & Safety**
+* **Why?** This ends the lesson on a positive, predictable note. It reinforces your relationship before they leave.
+* **Examples:**
+ * **Positive Go-Round:** "Share one word about how you feel" or "Share one thing you learned."
+ * **Teacher Acknowledgment:** "I am proud of how you all worked together today. You were great problem-solvers."
+ * **Goodbye Ritual:** A consistent wave, song, or saying. "Class is done. I will see you tomorrow. Be safe."
+
+
+### **Teacher's Reflection (For You, Later)**
+* This is not for grading. It's for you.
+* Think: "What one small thing went well?" "Which student did I connect with today?"
+* Be kind to yourself. On difficult days, just being a calm, stable adult in that room **is the most important lesson you can give.**
+`;
+
+
+       // The System Instruction that primes the Gemini model
+       const systemPrompt = `You are an expert, on-demand teaching assistant for educators in high-stress, low-resource, and conflict-affected environments. Your primary goal is to generate context-aware, trauma-informed lesson plans.
+
+
+You MUST strictly adhere to the following principles and structure, which are the 'trusted library' of trauma-informed care for this community.
+
+
+--- BEGIN TRUSTED GUIDE ---
+${trustedGuide}
+--- END TRUSTED GUIDE ---
+
+
+When a teacher gives you a prompt, you must:
+1.  Use their contextual inputs (age, materials, time) to make the lesson realistic. If materials are very limited (e.g., "chalk"), the lesson MUST work with only those materials.
+2.  Generate a complete lesson plan using the 3-part structure from the guide:
+   - **1. The Arrival & Calming (5 Mins)**: Must be predictable.
+   - **2. The Learning Activity (15-20 Mins)**: Must include a **Student Choice (Simple)**.
+   - **3. The Closing & Connection (5 Mins)**: Must be positive and reinforce connection.
+3.  Ensure that the 5 core principles (Safety, Trust, Connection, Choice, Empowerment) are clearly embedded in the plan.
+4.  The output should be a complete lesson plan in simple Markdown format. Use clear headings (e.g., '## 1. The Arrival & Calming (5 Mins)'). Be encouraging, clear, and supportive in your tone. Do not add any preamble before the lesson plan itself.`;
+
+
+       generateBtn.addEventListener('click', handleGenerateClick);
+       copyBtn.addEventListener('click', copyToClipboard);
+
+
+       async function handleGenerateClick() {
+           // 1. Get user input
+           const ageRange = document.getElementById('age-range').value || 'Not specified';
+           const subject = document.getElementById('subject').value || 'Not specified';
+           const timeAvailable = document.getElementById('time-available').value || 'Not specified';
+           const materials = document.getElementById('materials').value || 'Not specified';
+           const mainGoal = document.getElementById('main-goal').value;
+
+
+           if (!mainGoal) {
+               // Use a custom modal/message box instead of alert
+               showMessage('Please enter a main goal for your lesson.');
+               return;
+           }
+
+
+           // 2. Construct the user query
+           const userQuery = `
+Please generate a lesson plan with the following details:
+- **Age Range:** ${ageRange}
+- **Subject:** ${subject}
+- **Time Available:** ${timeAvailable}
+- **Available Materials:** ${materials}
+- **Main Goal / Lesson Idea:** ${mainGoal}
+`;
+
+
+           // 3. Show loader and hide form/results
+           loader.classList.remove('hidden');
+           resultsContainer.classList.add('hidden');
+           generateBtn.disabled = true;
+           generateBtn.textContent = 'Generating...';
+
+
+           try {
+               // 4. Call the Gemini API
+               const generatedText = await callGemini(userQuery);
+
+
+               // 5. Display results
+               resultsContent.innerHTML = parseMarkdown(generatedText);
+               resultsContainer.classList.remove('hidden');
+              
+           } catch (error) {
+               console.error('Error generating lesson plan:', error);
+               showMessage('An error occurred. Please try again.');
+           } finally {
+               // 6. Hide loader
+               loader.classList.add('hidden');
+               generateBtn.disabled = false;
+               generateBtn.textContent = 'Generate Lesson Plan';
+           }
+       }
+
+
+       async function callGemini(userQuery) {
+           const apiKey = ""; // Leave empty, will be handled by the environment
+           const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+
+           const payload = {
+               contents: [{ parts: [{ text: userQuery }] }],
+               systemInstruction: {
+                   parts: [{ text: systemPrompt }]
+               },
+               generationConfig: {
+                   temperature: 0.7,
+                   topP: 0.9,
+                   topK: 40,
+               }
+           };
+
+
+           let response;
+           let retries = 3;
+           let delay = 1000;
+
+
+           for (let i = 0; i < retries; i++) {
+               try {
+                   response = await fetch(apiUrl, {
+                       method: 'POST',
+                       headers: { 'Content-Type': 'application/json' },
+                       body: JSON.stringify(payload)
+                   });
+
+
+                   if (response.ok) {
+                       const result = await response.json();
+                       const candidate = result.candidates?.[0];
+                       if (candidate && candidate.content?.parts?.[0]?.text) {
+                           return candidate.content.parts[0].text;
+                       } else {
+                           throw new Error('Invalid response structure from API.');
+                       }
+                   } else if (response.status === 429 || response.status >= 500) {
+                       // Handle rate limiting and server errors with retry
+                       if (i === retries - 1) throw new Error(`API error: ${response.status}`);
+                       await new Promise(resolve => setTimeout(resolve, delay));
+                       delay *= 2; // Exponential backoff
+                   } else {
+                       // Other client-side errors
+                       throw new Error(`API error: ${response.status}`);
+                   }
+               } catch (error) {
+                   if (i === retries - 1) throw error;
+                   await new Promise(resolve => setTimeout(resolve, delay));
+                   delay *= 2;
+               }
+           }
+           throw new Error('Failed to get a response from the API after retries.');
+       }
+
+
+       function parseMarkdown(text) {
+           // Simple Markdown parser
+           return text
+               .replace(/^##\s(.*)/gm, '<h2 class="text-xl font-bold mt-4 mb-2">$1</h2>') // h2
+               .replace(/^###\s(.*)/gm, '<h3 class="text-lg font-semibold mt-3 mb-1">$1</h3>') // h3
+               .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold
+               .replace(/\*(.*?)\*/g, '<em>$1</em>') // italic
+               .replace(/^\*\s(.*)/gm, '<ul class="list-disc list-outside ml-6"><li>$1</li></ul>') // unordered list
+               .replace(/<\/ul>\n<ul class="list-disc list-outside ml-6">/g, '') // Combine consecutive lists
+               .replace(/\n/g, '<br>'); // newlines
+       }
+
+
+       function copyToClipboard() {
+           // Create a temporary textarea to hold the text
+           const textarea = document.createElement('textarea');
+           textarea.value = resultsContent.innerText; // Get the text content
+           document.body.appendChild(textarea);
+Two-Pane App with NotebookLM:index.html
+           textarea.select();
+           try {
+               document.execCommand('copy');
+               showMessage('Copied to clipboard!');
+           } catch (err) {
+               showMessage('Failed to copy.');
+           }
+           document.body.removeChild(textarea);
+       }
+
+
+       function showMessage(message) {
+           // This is a simple, non-blocking message.
+           // A more advanced version would be a custom modal.
+           let messageBox = document.getElementById('message-box');
+           if (!messageBox) {
+               messageBox = document.createElement('div');
+               messageBox.id = 'message-box';
+               messageBox.className = 'fixed top-4 right-4 bg-red-500 text-white py-2 px-4 rounded-lg shadow-md transition-opacity duration-300';
+               document.body.appendChild(messageBox);
+           }
+           messageBox.textContent = message;
+           messageBox.style.opacity = 1;
+
+
+           setTimeout(() => {
+               messageBox.style.opacity = 0;
+           }, 3000);
+       }
+
+
+   </script>
+</body>
+</html>
+
+
+
+
+
+
+
